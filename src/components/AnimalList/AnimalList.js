@@ -11,17 +11,22 @@ class AnimalList extends Component {
         this.props.dispatch(action);
     }
 
+    handleDelete = (id) => {
+        // console.log('delete click', id);
+        this.props.dispatch({ type: 'DELETE_ANIMAL', payload: id});
+    }
+
     // Renders the list of animals
     render() {
         return (
             <table className="AnimalList">
                 <thead>
-                    <tr><th>Species</th><th>Class</th></tr>
+                    <tr><th>Species</th><th>Class</th><th></th></tr>
                 </thead>
                 <tbody>
                     {/* Render each item from the zooAnimal reducer */}
                     {this.props.reduxState.zooAnimals.map((classData, i) => {
-                        return (<AnimalListItem key={i} classData={classData} />);
+                        return (<AnimalListItem key={classData.id} classData={classData} handleDelete={this.handleDelete} />);
                     })}
                 </tbody>
             </table>

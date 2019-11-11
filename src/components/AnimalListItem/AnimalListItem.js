@@ -9,6 +9,7 @@ class AnimalListItem extends Component {
             <tr>
                 <td>{this.props.classData.species_name}</td>
                 <td>{this.props.classData.class_name}</td>
+                <td><button onClick={() => this.props.handleDelete(this.props.classData.id)}>Feed To Lions</button></td>
             </tr>
         );
     }

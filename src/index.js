@@ -16,14 +16,26 @@ import axios from 'axios';
 function* rootSaga() {
     // YOUR CODE HERE
     yield takeEvery('GET_ZOO_ANIMALS', getAnimalsSaga);
+    yield takeEvery('DELETE_ANIMAL', deleteAnimalSaga);
 }
 
+// get all rows from db
 function* getAnimalsSaga() {
     try {
         const zooResponse = yield axios.get('/zoo');
         yield put({ type: 'SET_ZOO_ANIMALS', payload: zooResponse.data});
     } catch (error) {
         console.log('error fetching zoo animals');
+    }
+}
+
+// delete row from db
+function* deleteAnimalSaga(action) {
+    try {
+        yield axios.delete(`/zoo/${action.payload}`);
+        yield put({ type: 'GET_ZOO_ANIMALS'});
+    } catch (error) {
+        console.log('error deleting zoo animal');
     }
 }
 

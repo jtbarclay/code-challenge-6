@@ -6,7 +6,7 @@ router.get('/', (req, res) => {
     // YOUR CODE HERE
     
     const query = `
-        SELECT s.species_name AS species, c.class_name AS "class" FROM species s
+        SELECT s.species_name, c.class_name FROM species s
         JOIN "class" c ON c.id=s.class_id;
     `;
 

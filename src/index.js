@@ -10,6 +10,7 @@ import logger from 'redux-logger';
 // Import saga middleware
 import createSagaMiddleware from 'redux-saga';
 import { takeEvery, put } from 'redux-saga/effects';
+import axios from 'axios';
 
 // Your saga should listen for the action type of `GET_ZOO_ANIMALS`
 function* rootSaga() {

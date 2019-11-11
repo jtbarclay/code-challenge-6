@@ -74,5 +74,24 @@ router.post('/', (req, res) => {
         })
 })
 
+// post new class
+
+router.post('/:class', (req, res) => {
+    const query = `
+        INSERT INTO "class" ("class_name") 
+        VALUES ($1);
+    `;
+
+    pool.query(query, [req.params.class])
+        .then((respons) => {
+            console.log('/zoo/class POST response', response);
+            res.sendStatus(200);
+        })
+        .catch((error) => {
+            console.log('/zoo/class POST error', error);
+            res.sendStatus(500);
+        })
+})
+
 
 module.exports = router;

@@ -19,6 +19,7 @@ function* rootSaga() {
     yield takeEvery('DELETE_ANIMAL', deleteAnimalSaga);
     yield takeEvery('GET_CLASSES', getClassSaga);
     yield takeEvery('POST_ANIMAL', postAnimalSaga);
+    yield takeEvery('POST_CLASS', postClassSaga);
 }
 
 // get all rows from db
@@ -58,6 +59,16 @@ function* postAnimalSaga(action) {
         yield put({ type: 'GET_ZOO_ANIMALS' });
     } catch (error) {
         console.log('error sending new animal', error);
+    }
+}
+
+// send new class to db
+function* postClassSaga(action) {
+    try {
+        yield axios.post(`/zoo/${action.payload}`);
+        yield put({ type: 'GET_CLASSES' });
+    } catch (error) {
+        console.log('error sending new class', error);
     }
 }
 

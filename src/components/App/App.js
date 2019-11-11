@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import AnimalList from '../AnimalList/AnimalList'
 import './App.css';
 import AnimalForm from '../AnimalForm/AnimalForm';
+import ClassForm from '../ClassForm/ClassForm';
 
 class App extends Component {
   // Renders the entire app on the DOM
@@ -14,6 +15,7 @@ class App extends Component {
         </header>
         <br />
         <AnimalForm />
+        <ClassForm />
         <br />
         <AnimalList />
       </div>

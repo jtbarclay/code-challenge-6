@@ -17,6 +17,8 @@ function* rootSaga() {
     // YOUR CODE HERE
     yield takeEvery('GET_ZOO_ANIMALS', getAnimalsSaga);
     yield takeEvery('DELETE_ANIMAL', deleteAnimalSaga);
+    yield takeEvery('GET_CLASSES', getClassSaga);
+    yield takeEvery('POST_ANIMAL', postAnimalSaga);
 }
 
 // get all rows from db
@@ -39,6 +41,26 @@ function* deleteAnimalSaga(action) {
     }
 }
 
+// get classes from db
+function* getClassSaga() {
+    try {
+        const classResponse = yield axios.get('/zoo/classes');
+        yield put({ type: 'SET_CLASSES', payload: classResponse.data});
+    } catch (error) {
+        console.log('error fetching classes', error);
+    }
+}
+
+// send new animal to db
+function* postAnimalSaga(action) {
+    try {
+        yield axios.post('/zoo', action.payload);
+        yield put({ type: 'GET_ZOO_ANIMALS' });
+    } catch (error) {
+        console.log('error sending new animal', error);
+    }
+}
+
 // Create sagaMiddleware
 const sagaMiddleware = createSagaMiddleware();
 
@@ -52,10 +74,20 @@ const zooAnimals = (state = [], action) => {
     }
 }
 
+const animalClasses = (state = [], action) => {
+    switch (action.type) {
+        case 'SET_CLASSES':
+            return action.payload;
+        default:
+            return state;
+    }
+}
+
 // Create one store that all components can use
 const storeInstance = createStore(
     combineReducers({
         zooAnimals,
+        animalClasses,
     }),
     // Add sagaMiddleware to our store
     applyMiddleware(sagaMiddleware, logger),

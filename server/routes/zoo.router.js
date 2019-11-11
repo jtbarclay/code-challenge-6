@@ -40,5 +40,39 @@ router.delete('/:id', (req, res) => {
         })
 })
 
+//get class names
+router.get('/classes', (req, res) => {
+    const query = `SELECT * from "class";`;
+
+    pool.query(query)
+        .then((response) => {
+            console.log('/classes GET response', response);
+            res.send(response.rows)
+        })
+        .catch((error) => {
+            console.log('/classes GET error', error);
+            res.sendStatus(500);
+        })
+})
+
+// post new animal
+
+router.post('/', (req, res) => {
+    const query = `
+        INSERT INTO "species" ("species_name", "class_id") 
+        VALUES ($1, $2);
+    `;
+
+    pool.query(query, [req.body.newAnimal, req.body.class])
+        .then((response) => {
+            console.log('/zoo POST response', response);
+            res.sendStatus(200);
+        })
+        .catch((error) => {
+            console.log('/zoo POST error', error);
+            res.sendStatus(500);
+        })
+})
+
 
 module.exports = router;
